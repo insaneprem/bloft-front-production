@@ -102,15 +102,29 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   // 🔐 Securely fetch user using withCredentials
   async function fetchUser() {
+    const token = Cookies.get("token"); // Get the token from cookies
+
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+
     try {
       const { data } = await axios.get(`${user_service}/api/v1/me`, {
-        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`, // Add the token to the Authorization header
+        },
       });
 
       setUser(data);
       setIsAuth(true);
     } catch (error) {
       console.log("fetchUser error:", error);
+      // If the token is invalid or expired, the backend will return an error.
+      // It's good practice to clear the cookie and log the user out here.
+      Cookies.remove("token");
+      setUser(null);
+      setIsAuth(false);
     } finally {
       setLoading(false);
     }
