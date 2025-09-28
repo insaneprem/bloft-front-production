@@ -100,7 +100,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [savedBlogs, setSavedBlogs] = useState<SavedBlogType[] | null>(null);
 
-  // 🔐 Securely fetch user using withCredentials
+  // Securely fetch user using withCredentials
   async function fetchUser() {
     const token = Cookies.get("token"); // Get the token from cookies
 

@@ -42,6 +42,7 @@ const Blogs = () => {
                       desc={e.description}
                       id={e.id}
                       time={e.created_at}
+                      category={e.category}
                     />
                   );
                 })}
